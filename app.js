@@ -8,8 +8,13 @@ const errorHandler = require('./middleware/errorHandler');
 const authRoutes = require('./routes/authRoutes');
 const eventRoutes = require('./routes/events.routes');
 const registrationRoutes = require('./routes/registrations.routes');
+const announcementRoutes = require('./routes/announcements.routes');
+const http    = require("http");
+const { Server } = require("socket.io");
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
 
 app.use(morgan('dev'));
 app.use(express.json());
@@ -18,6 +23,18 @@ app.use(mongoSanitize());
 app.use('/api/auth', authRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/registrations', registrationRoutes);
+app.use('/api/announcements', announcementRoutes);
+app.set('io', io);
+
+io.on("connection", (socket) => {
+  socket.on('join-event', (eventId) => {
+    socket.join(eventId);
+  });
+  socket.on('disconnect', () => {
+    console.log("User disconnected:", socket.id);
+  });
+  console.log("User connected:", socket.id);
+});
 
 app.use((req, res, next) => {
   res.status(404).json({ status: 'fail', message: 'Route not found' });
@@ -27,7 +44,7 @@ app.use(errorHandler);
 
 async function start() {
   await connectDB();
-  app.listen(process.env.PORT, () => {
+  server.listen(process.env.PORT, () => {
     console.log(`Server running on port ${process.env.PORT}`);
   });
 }
