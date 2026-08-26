@@ -72,7 +72,10 @@ exports.getEventById = async (req, res, next) => {
 
 exports.createEvent = async (req, res, next) => {
   try {
-    const newEvent = await Event.create(req.body);
+    const newEvent = await Event.create({
+      ...req.body,
+      organizer: req.user.id
+    });
     ok(res, newEvent, 'Event created successfully', 201);
   } catch (error) {
     next(error);
