@@ -36,6 +36,10 @@ io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
 });
 
+app.get("/api/health", (req, res) => {
+  res.status(200).json({ status: "ok", connections: io.engine.clientsCount });
+});
+
 app.use((req, res, next) => {
   res.status(404).json({ status: 'fail', message: 'Route not found' });
 });
