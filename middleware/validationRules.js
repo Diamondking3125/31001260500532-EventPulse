@@ -9,7 +9,6 @@ const eventRules = {
     body('city').trim().notEmpty().withMessage('City is required'),
     body('venue').trim().notEmpty().withMessage('Venue is required'),
     body('capacity').isInt({ min: 1 }).withMessage('Capacity must be at least 1'),
-    body('organizer').isMongoId().withMessage('Organizer must be a valid MongoDB id'),
   ],
   update: [
     body('title').optional().trim().notEmpty().withMessage('Title cannot be empty'),
@@ -19,7 +18,6 @@ const eventRules = {
     body('city').optional().trim().notEmpty().withMessage('City cannot be empty'),
     body('venue').optional().trim().notEmpty().withMessage('Venue cannot be empty'),
     body('capacity').optional().isInt({ min: 1 }).withMessage('Capacity must be at least 1'),
-    body('organizer').optional().isMongoId().withMessage('Organizer must be a valid MongoDB id'),
   ],
   id: [param('id').isMongoId().withMessage('id must be a valid MongoDB id')],
   query: [
@@ -47,4 +45,11 @@ const registrationRules = {
   id: [param('id').isMongoId().withMessage('id must be a valid MongoDB id')],
 };
 
-module.exports = { authRules, eventRules, registrationRules };
+const announcementRules = {
+  create: [
+    body('eventId').isMongoId().withMessage('Event must be a valid MongoDB id'),
+    body('text').trim().notEmpty().withMessage('Text is required'),
+  ],
+};
+
+module.exports = { authRules, eventRules, registrationRules, announcementRules };
