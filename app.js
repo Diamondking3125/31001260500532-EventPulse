@@ -12,7 +12,7 @@ const announcementRoutes = require('./routes/announcements.routes');
 const http    = require("http");
 const { Server } = require("socket.io");
 const swaggerUi = require('swagger-ui-express');
-const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerSpec = require('./config/swagger');
 
 const app = express();
 const server = http.createServer(app);
@@ -23,25 +23,6 @@ if (process.env.NODE_ENV === "development") {
 } else {
   app.use(morgan("combined"));
 }
-
-const swaggerOptions = {
-  definition: {
-    openapi: '3.0.0',
-    info: {
-      title: '31001260500532-EventPulse',
-      version: '2.0.0',
-      description: 'API documentation generated with swagger-jsdoc',
-    },
-    servers: [
-      {
-        url: 'https://31001260500532-event-pulse.vercel.app/',
-      },
-    ],
-  },
-  apis: ['./routes/*.js', './app.js'], 
-};
-
-const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 app.use(express.json());
 app.use(mongoSanitize());
