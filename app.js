@@ -68,9 +68,4 @@ if (require.main === module) {
     });
 }
 
-start().catch((error) => {
-  console.error('Server failed to start:', error.message);
-  process.exitCode = 1;
-});
-
 module.exports = app;
