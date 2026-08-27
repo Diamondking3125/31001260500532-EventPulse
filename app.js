@@ -11,16 +11,43 @@ const registrationRoutes = require('./routes/registrations.routes');
 const announcementRoutes = require('./routes/announcements.routes');
 const http    = require("http");
 const { Server } = require("socket.io");
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-app.use(morgan('dev'));
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+} else {
+  app.use(morgan("combined"));
+}
+
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: '31001260500532-EventPulse',
+      version: '2.0.0',
+      description: 'API documentation generated with swagger-jsdoc',
+    },
+    servers: [
+      {
+        url: 'https://31001260500532-event-pulse.vercel.app/',
+      },
+    ],
+  },
+  apis: ['./routes/*.js', './app.js'], 
+};
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+
 app.use(express.json());
 app.use(mongoSanitize());
 
 app.use('/api/auth', authRoutes);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api/events', eventRoutes);
 app.use('/api/registrations', registrationRoutes);
 app.use('/api/announcements', announcementRoutes);
@@ -48,13 +75,10 @@ async function start() {
   await connectDB();
   server.listen(process.env.PORT, () => {
     console.log(`Server running on port ${process.env.PORT}`);
+    console.log('Swagger UI available at https://31001260500532-event-pulse.vercel.app/api-docs');
   });
 }
 
 app.use(errorHandler);
 
-if (require.main === module) {
-  start();
-}
-
-module.exports = app;
+start();
