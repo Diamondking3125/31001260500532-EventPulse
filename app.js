@@ -11,10 +11,8 @@ const registrationRoutes = require('./routes/registrations.routes');
 const announcementRoutes = require('./routes/announcements.routes');
 const http    = require("http");
 const { Server } = require("socket.io");
-const path = require('path');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
-const swaggerUiAssetPath = require('swagger-ui-dist').getAbsoluteFSPath();
 const config = require('./config/config');
 
 const app = express();
@@ -31,7 +29,6 @@ app.use(express.json());
 app.use(mongoSanitize());
 
 app.use('/api/auth', authRoutes);
-app.use('/api-docs', express.static(swaggerUiAssetPath));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api/events', eventRoutes);
 app.use('/api/registrations', registrationRoutes);
