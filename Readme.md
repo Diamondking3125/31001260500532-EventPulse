@@ -1,6 +1,6 @@
 # EventPulse API
 
-EventPulse is a full-stack RESTful backend application built with Node.js, Express, and MongoDB. It provides comprehensive event management capabilities, including user authentication, role-based access control, event listing with advanced query filtering and pagination, event registration and capacity management, and real-time announcement broadcasting using Socket.io.
+EventPulse is a RESTful backend application built with Node.js, Express, and MongoDB. It provides comprehensive event management capabilities, including user authentication, role-based access control, event listing with advanced query filtering and pagination, event registration and capacity management, and real-time announcement broadcasting using Socket.io.
 
 ## Tech Stack
 

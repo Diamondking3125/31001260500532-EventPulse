@@ -55,15 +55,18 @@ app.use((req, res) => {
 
 app.use(errorHandler);
 
-async function start() {
-  await connectDB();
-  
-  server.listen(config.port, () => {
-    console.log(`Server running on port ${config.port}`);
-    console.log('Swagger UI available at https://31001260500532-event-pulse.vercel.app/api-docs');
-  });
+if (require.main === module) {
+  connectDB()
+    .then(() => {
+      server.listen(config.port, () => {
+        console.log(`Server running on port ${config.port}`);
+      });
+    })
+    .catch((error) => {
+      console.error('Server failed to start:', error.message);
+      process.exitCode = 1;
+    });
 }
-
 
 start().catch((error) => {
   console.error('Server failed to start:', error.message);
