@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
 const AppError = require('../utils/AppError');
 const asyncHandler = require('../utils/asyncHandler');
+const config = require('../config/config');
 
 exports.register = asyncHandler(async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -23,7 +24,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 
   const token = jwt.sign(
     { userId: user._id, role: user.role },
-    process.env.JWT_SECRET,
+    config.jwtSecret,
     { expiresIn: '7d' }
   );
 
@@ -51,7 +52,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   const token = jwt.sign(
     { userId: user._id, role: user.role },
-    process.env.JWT_SECRET,
+    config.jwtSecret,
     { expiresIn: '7d' }
   );
 

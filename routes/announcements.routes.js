@@ -6,6 +6,6 @@ const { announcementRules } = require('../middleware/validationRules');
 const ctrl = require('../controllers/announcements.controller');
 
 router.post('/', announcementRules.create, validate, requireAuth, requireRole('admin'), ctrl.createAnnouncement);
-router.get('/:eventId', ctrl.getAnnouncementsByEvent);
+router.get('/:eventId', announcementRules.eventId, validate, ctrl.getAnnouncementsByEvent);
 
 module.exports = router;

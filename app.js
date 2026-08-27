@@ -13,6 +13,7 @@ const http    = require("http");
 const { Server } = require("socket.io");
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
+const config = require('./config/config');
 
 const app = express();
 const server = http.createServer(app);
@@ -26,6 +27,15 @@ if (process.env.NODE_ENV === "development") {
 
 app.use(express.json());
 app.use(mongoSanitize());
+
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.use('/api/auth', authRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -48,18 +58,25 @@ app.get("/api/health", (req, res) => {
   res.status(200).json({ status: "ok", connections: io.engine.clientsCount });
 });
 
-app.use((req, res, next) => {
+app.use(errorHandler);
+
+app.use((req, res) => {
   res.status(404).json({ status: 'fail', message: 'Route not found' });
 });
 
 async function start() {
   await connectDB();
-  server.listen(process.env.PORT, () => {
-    console.log(`Server running on port ${process.env.PORT}`);
+  server.listen(config.port, () => {
+    console.log(`Server running on port ${config.port}`);
     console.log('Swagger UI available at https://31001260500532-event-pulse.vercel.app/api-docs');
   });
 }
 
-app.use(errorHandler);
+if (require.main === module) {
+  start().catch((error) => {
+    console.error('Server failed to start:', error.message);
+    process.exitCode = 1;
+  });
+}
 
-start();
+module.exports = app;

@@ -23,7 +23,7 @@ exports.getEvents = async (req, res, next) => {
       ];
     }
 
-    const allowedSortFields = ['date', 'registrations'];
+    const allowedSortFields = ['date'];
     const sortField = allowedSortFields.includes(sortBy) ? sortBy : 'date';
     const sortDirection = order === 'desc' ? -1 : 1;
     const sort = { [sortField]: sortDirection };

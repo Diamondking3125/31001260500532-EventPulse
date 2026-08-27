@@ -50,6 +50,7 @@ const announcementRules = {
     body('eventId').isMongoId().withMessage('Event must be a valid MongoDB id'),
     body('text').trim().notEmpty().withMessage('Text is required'),
   ],
+  eventId: [param('eventId').isMongoId().withMessage('eventId must be a valid MongoDB id')],
 };
 
 module.exports = { authRules, eventRules, registrationRules, announcementRules };
