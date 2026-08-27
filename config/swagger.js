@@ -109,7 +109,7 @@ module.exports = {
           { name: 'category', in: 'query', schema: { type: 'string' } }, { name: 'city', in: 'query', schema: { type: 'string' } },
           { name: 'startDate', in: 'query', schema: { type: 'string', format: 'date-time' } }, { name: 'endDate', in: 'query', schema: { type: 'string', format: 'date-time' } },
           { name: 'search', in: 'query', schema: { type: 'string' } }, { name: 'page', in: 'query', schema: { type: 'integer', minimum: 1, default: 1 } },
-          { name: 'limit', in: 'query', schema: { type: 'integer', minimum: 1, default: 10 } }, { name: 'sortBy', in: 'query', schema: { type: 'string', enum: ['date', 'registrations'] } },
+          { name: 'limit', in: 'query', schema: { type: 'integer', minimum: 1, default: 10 } }, { name: 'sortBy', in: 'query', schema: { type: 'string', enum: ['date'] } },
           { name: 'order', in: 'query', schema: { type: 'string', enum: ['asc', 'desc'], default: 'asc' } },
         ],
         responses: { 200: { description: 'Events returned' } },

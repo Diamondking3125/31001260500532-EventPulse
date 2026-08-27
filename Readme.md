@@ -54,7 +54,7 @@ npm run dev
 
 | Method | Endpoint | Description |
 | --- | --- | --- |
-| GET | `/health` | Server uptime and connection health status check |
+| GET | `/api/health` | Server uptime and connection health status check |
 | POST | `/api/auth/register` | Register a new user account |
 | POST | `/api/auth/login` | Authenticate user and receive JWT token |
 | GET | `/api/events` | List all events (supports search, filter, sort, pagination) |
@@ -71,4 +71,4 @@ npm run dev
 ## Live Deployment
 
 - **Live API Base URL:** <https://31001260500532-event-pulse.vercel.app>
-- **Health Check Endpoint:** <https://31001260500532-event-pulse.vercel.app/health>
+- **Health Check Endpoint:** <https://31001260500532-event-pulse.vercel.app/api/health>
