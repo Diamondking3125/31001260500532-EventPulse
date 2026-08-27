@@ -17,8 +17,8 @@ Follow these steps to set up and run the application locally.
 ### 1. Clone the Repository
 
 ```bash
-git clone [https://github.com/your-username/StudentID-EventPulse.git](https://github.com/your-username/StudentID-EventPulse.git)
-cd StudentID-EventPulse
+git clone https://github.com/Diamondking3125/31001260500532-EventPulse
+cd 31001260500532-EventPulse
 ```
 
 ### 2. Install Dependencies
@@ -70,5 +70,5 @@ npm run dev
 
 ## Live Deployment
 
-- **Live API Base URL:** <https://your-deployment-url.vercel.app>
-- **Health Check Endpoint:** <https://your-deployment-url.vercel.app/health>
+- **Live API Base URL:** <https://31001260500532-event-pulse.vercel.app>
+- **Health Check Endpoint:** <https://31001260500532-event-pulse.vercel.app/health>
