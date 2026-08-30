@@ -1,5 +1,6 @@
 const Event = require('../models/event.model');
 const ok = require('../utils/ok');
+const Category = require('../models/category.model');
 
 exports.getEvents = async (req, res, next) => {
   try {
